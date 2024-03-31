@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">JJwarehouse</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="add_data">Add Stock</string>
+    <string name="item_name">Item Name</string>
+    <string name="delete">Delete</string>
+    <string name="edit_value">Edit Value</string>
+    <string name="item_qty_decrease_button">Remove</string>
+    <string name="item_qty_increase_button">Add</string>
+    <string name="item_remove">Remove Item</string>
+    <string name="item_save">Save</string>
+    <string name="item_qty_label">Item Amount</string>
+    <string name="item_name_label">Item Name</string>
+    <string name="we_need_your_permission_to_send_sms_notifications">Permissions to access</string>
+    <string name="request_permission">Permission Request</string>
+    <string name="cancel_permission">Deny Permission</string>
+    <string name="logo_description">J Logo</string>
+    <string name="create_user">Create a New Account?</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="backButton">Back</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_background</item>
+        <!-- Set text color if needed -->
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>
