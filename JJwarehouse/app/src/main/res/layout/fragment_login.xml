@@ -73,3 +73,21 @@
         app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+<!-- In designing the UI for this application, I aimed to create an engaging and visually appealing experience that adheres to Android UI best practices. This involved customizing buttons and implementing a blue gradient background across all screens. Below is a narrative explaining my design process and considerations.
+
+Custom Button Design
+I designed custom buttons to enhance the visual appeal and user interaction of the application. To achieve this, I used image assets created in a graphic design tool, Figma, ensuring they are visually consistent with the app's theme. The custom buttons are implemented as ImageButton in the XML layout, allowing for more flexibility in design compared to standard buttons.
+
+Login Button: For the login button, I used a custom image (@drawable/j_custom_button) that aligns with the app's color scheme and visual identity. This not only makes the button stand out but also improves user engagement by providing a unique visual cue for the login action.
+
+Create Account Button: Similarly, the create account button uses a custom drawable (@drawable/custom_create), designed to encourage users to register. The button style (@style/CustomButtonStyle) was defined in the resources to maintain consistency and reuse across the app, demonstrating an understanding of Android's styling and theming capabilities.
+
+Blue Gradient Background
+The application features a blue gradient background, creating a dynamic and aesthetically pleasing look. This background is defined as a drawable resource (@drawable/gradient_background), which uses a linear gradient from a lighter blue to a darker blue. The use of gradients not only adds depth to the UI but also aligns with modern design trends.
+
+UI Best Practices
+Adhering to Android UI best practices, I ensured that the buttons and other UI elements are of appropriate sizes and accessible. For instance, the buttons have a minimum height of 48dp, which complies with the recommended touch target size, making it easy for users to interact with the app regardless of their device screen size.
+
+Accessibility and Usability: Each UI element is assigned descriptive contentDescription attributes, enhancing the app's accessibility. The use of ?android:selectableItemBackground for button backgrounds ensures a visual feedback loop when users interact with the buttons, aligning with usability best practices.
+
+Color and Contrast: The text and hints within EditText elements are set against a white background with black text (@color/black on @color/white), ensuring sufficient contrast for readability. This choice reflects a mindful approach to designing for a wide range of users, including those with visual impairments. -->

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- LinearLayout for vertical arrangement of child views -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:gravity="center_horizontal">
 
+    <!-- Input field for the username -->
     <EditText
         android:id="@+id/registrationUsername"
         android:layout_width="match_parent"
@@ -13,6 +16,7 @@
         android:inputType="text"
         android:minHeight="48dp" />
 
+    <!-- Input field for the password -->
     <EditText
         android:id="@+id/registrationPassword"
         android:layout_width="match_parent"
@@ -21,6 +25,7 @@
         android:inputType="textPassword"
         android:minHeight="48dp" />
 
+    <!-- Input field for confirming the password -->
     <EditText
         android:id="@+id/registrationPasswordConfirm"
         android:layout_width="match_parent"
@@ -29,16 +34,30 @@
         android:inputType="textPassword"
         android:minHeight="48dp" />
 
-    <Button
+    <!-- Spacer view for aesthetic spacing between elements -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <!-- Custom 'Submit' ImageButton for submitting the registration form -->
+    <ImageButton
         android:id="@+id/registrationSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"/>
+        android:background="@null"
+        android:src="@drawable/submit" />
 
-    <Button
+    <!-- Spacer view for aesthetic spacing between elements -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <!-- Custom 'Back' ImageButton to return to the previous screen -->
+    <ImageButton
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/backButton" />
+        android:background="@null"
+        android:src="@drawable/back_return" />
 
 </LinearLayout>

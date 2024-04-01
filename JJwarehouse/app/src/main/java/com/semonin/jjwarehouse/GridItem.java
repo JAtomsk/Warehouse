@@ -1,11 +1,36 @@
+/**
+ * GridItem Fragment
+ *
+ * Purpose:
+ * This fragment is used for adding a new inventory item or editing an existing one within the application.
+ * It provides a user interface where users can input item details such as name and quantity.
+ * This fragment supports both creating a new item (default) and editing an existing item (if provided with an item ID).
+ *
+ * Key Features:
+ * - Dynamic input fields for item name and quantity.
+ * - Buttons for increasing/decreasing quantity, saving item details, and removing an item.
+ * - Utilizes the DatabaseHelper class for all database interactions, showcasing effective CRUD operations.
+ * - Implements user-friendly UI adjustments such as adjusting view size dynamically based on the container.
+ *
+ * Author: [Jared Semonin]
+ * Date: [03/31/2024]
+ * Version: 1.0
+ */
+
+
+
+
 package com.semonin.jjwarehouse;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,15 +46,18 @@ public class GridItem extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Dynamically adjust fragment size for better UX
+
         View view = inflater.inflate(R.layout.fragment_grid_item, container, false);
+
 
         itemNameInput = view.findViewById(R.id.item_name_input);
         itemQtyInput = view.findViewById(R.id.item_qty_input);
 
         ImageView decreaseQtyButton = view.findViewById(R.id.item_qty_decrease);
         ImageView increaseQtyButton = view.findViewById(R.id.item_qty_increase);
-        TextView removeItemLink = view.findViewById(R.id.remove_item_link);
-        Button saveItemButton = view.findViewById(R.id.save_item);
+        ImageButton removeItemButton = view.findViewById(R.id.remove_item_link);
+        ImageButton saveItemButton = view.findViewById(R.id.save_item);
 
         // Check if editing an existing item
         if (getArguments() != null && getArguments().containsKey("itemId")) {
@@ -53,7 +81,7 @@ public class GridItem extends Fragment {
             }
         });
 
-        removeItemLink.setOnClickListener(new View.OnClickListener() {
+        removeItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteItem();
@@ -68,7 +96,7 @@ public class GridItem extends Fragment {
         });
 
 
-        Button backButton = view.findViewById(R.id.backButton);
+        ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             // Check if the fragment is added to an activity
             if (isAdded()) {

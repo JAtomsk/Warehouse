@@ -1,3 +1,30 @@
+/**
+ * DatabaseHelper Class
+ *
+ * Purpose:
+ * This class serves as an abstraction layer for the application's SQLite database, offering CRUD (Create, Read, Update, Delete)
+ * operations for inventory items and user credentials. It exemplifies the application of algorithmic principles and database
+ * management best practices in a real-world project.
+ *
+ * Features:
+ * - Secure User Authentication: Utilizes SHA-256 hashing for password storage, aligning with security best practices.
+ * - Efficient Data Management: Implements methods for adding, retrieving, updating, and deleting inventory items and users, demonstrating efficient data access patterns.
+ *
+ * Meeting Course Outcome:
+ * - The design and implementation of the `addItem`, `getItems`, `updateItem`, `deleteItem`, `addUser`, `checkUser`, and `checkUserExists` methods reflect the use of algorithmic principles in solving data management problems. This includes secure password handling, efficient data retrieval, and ensuring data integrity.
+ * - The class structure and its methods illustrate the application of computer science practices and standards, notably in database schema design, SQL query construction, and the use of SQLite for local data storage.
+ *
+ * Reflecting on the Enhancement Process:
+ * The development of the `DatabaseHelper` class enhanced  the importance of considering security, efficiency, and maintainability in software design. The introduction of password hashing was particularly enlightening, showcasing the necessity of anticipating and mitigating security vulnerabilities. Optimizing CRUD operations reinforced the value of clean, maintainable code and efficient database access.
+ *
+ * Author: [Jared Semonin]
+ * Date: [03/31/2024]
+ * Version: 1.0
+ */
+
+
+
+
 package com.semonin.jjwarehouse;
 
 
@@ -28,10 +55,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USER_NAME = "username";
     private static final String COLUMN_USER_PASSWORD = "password";
 
+
+    // Constructor
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // Creating tables for items and users
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_ITEMS = "CREATE TABLE " + TABLE_ITEMS + "("
@@ -39,15 +69,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_NAME + " TEXT,"
                 + COLUMN_QUANTITY + " INTEGER)";
         db.execSQL(CREATE_TABLE_ITEMS);
-
+// Create users table
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
                 + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_USER_NAME + " TEXT,"
                 + COLUMN_USER_PASSWORD + " TEXT)";
         db.execSQL(CREATE_USERS_TABLE);
     }
-
-// implement new user registration
+    // Adding new user with hashed password
 public void addUser(String username, String password) {
     SQLiteDatabase db = this.getWritableDatabase();
     ContentValues values = new ContentValues();
@@ -58,6 +87,8 @@ public void addUser(String username, String password) {
     db.insert(TABLE_USERS, null, values);
     db.close();
 }
+    // Check if user exists with given username and password
+
     public boolean checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         String hashedPassword = SecurityUtils.hashPassword(password);
@@ -73,7 +104,9 @@ public void addUser(String username, String password) {
         db.close();
         return cursorCount > 0;
     }
-public boolean checkUserExists(String username){
+    // Check if username already exists in the database
+
+    public boolean checkUserExists(String username){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USER_NAME + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{username});
@@ -81,6 +114,7 @@ public boolean checkUserExists(String username){
         cursor.close();
         return exists;
 }
+    // Database upgrade logic
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -169,8 +203,10 @@ public boolean checkUserExists(String username){
 
 }
 
-// Item class to represent each item
-class Item {
+/**
+ * Item class to represent each inventory item.
+ * Contains item id, name, and quantity.
+ */class Item {
     private int id;
     private String name;
     private int quantity;

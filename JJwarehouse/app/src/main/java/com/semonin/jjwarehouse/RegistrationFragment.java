@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class RegistrationFragment extends Fragment {
@@ -29,7 +30,7 @@ public class RegistrationFragment extends Fragment {
         editTextUsername = view.findViewById(R.id.registrationUsername);
         editTextPassword = view.findViewById(R.id.registrationPassword);
         editTextConfirmPassword = view.findViewById(R.id.registrationPasswordConfirm);
-        Button submitButton = view.findViewById(R.id.registrationSubmit);
+        ImageButton submitButton = view.findViewById(R.id.registrationSubmit);
 
         DatabaseHelper db = new DatabaseHelper(getContext());
 
@@ -66,7 +67,7 @@ public class RegistrationFragment extends Fragment {
             }
         });
 
-        Button backButton = view.findViewById(R.id.backButton);
+        ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
             // Check if the fragment is added to an activity
             if (isAdded()) {

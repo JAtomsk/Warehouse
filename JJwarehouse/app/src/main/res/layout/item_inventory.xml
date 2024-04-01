@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@color/white"
     android:padding="16dp">
 
+    <!-- TextView for displaying the item name. It occupies the flexible space in the LinearLayout -->
     <TextView
         android:id="@+id/textViewItemName"
         android:layout_width="0dp"
@@ -13,6 +15,7 @@
         android:text="@string/item_name"
         android:textSize="16sp"/>
 
+    <!-- TextView for displaying the quantity of the item. This view is set to wrap its content without expanding. -->
     <TextView
         android:id="@+id/textViewItemQuantity"
         android:layout_width="wrap_content"
