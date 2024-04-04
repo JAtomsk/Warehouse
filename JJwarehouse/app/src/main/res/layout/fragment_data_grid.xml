@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Root layout using ConstraintLayout for flexible positioning and complex layouts with a flat view hierarchy -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- RecyclerView for displaying a list of data. It fills the parent to show as much content as possible -->
+    tools:context=".DataGridFragment">
+
+    <!-- Search Input Field -->
+    <EditText
+        android:id="@+id/search_field"
+        android:layout_width="340dp"
+        android:layout_height="36dp"
+        android:background="@drawable/search_bar"
+        android:hint="@string/search_hint"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="40dp"
+        android:paddingRight="16dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.AppCompat.EditText"/>
+
+    <!-- RecyclerView for displaying a list of data -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dataGrid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <!-- Custom 'Add Data' ImageButton to add new items. This button is made in Figma and exported as a drawable resource -->
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/search_field"
+        app:layout_constraintBottom_toTopOf="@id/addDataButton"/>
+
+    <!-- Custom 'Add Data' ImageButton -->
     <ImageButton
         android:id="@+id/addDataButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add_item"
         android:background="@null"
+        android:src="@drawable/add_item"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
