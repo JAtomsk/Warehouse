@@ -1,27 +1,32 @@
 /**
- * DatabaseHelper Class
+ * DatabaseHelper.java - Version 2.0
  *
  * Purpose:
- * This class serves as an abstraction layer for the application's SQLite database, offering CRUD (Create, Read, Update, Delete)
- * operations for inventory items and user credentials. It exemplifies the application of algorithmic principles and database
- * management best practices in a real-world project.
+ * Serves as a comprehensive database management tool within the app, facilitating CRUD operations on inventory items and user data, and introducing search functionality to enhance data accessibility.
  *
  * Features:
- * - Secure User Authentication: Utilizes SHA-256 hashing for password storage, aligning with security best practices.
- * - Efficient Data Management: Implements methods for adding, retrieving, updating, and deleting inventory items and users, demonstrating efficient data access patterns.
+ * - Manages database creation and version management.
+ * - Implements CRUD operations for inventory items.
+ * - Provides user authentication functionality.
+ * - Introduces search functionality for inventory items, leveraging SQLite's LIKE query.
+ *
+ * Enhancements:
+ * - Added getItemsFilteredBy method to support dynamic search based on user queries.
+ *
+ * Course Outcomes:
+ * - "Design, develop, and deliver professional-quality oral, written, and visual communications that are coherent, technically sound, and appropriately adapted to specific audiences and contexts."
+ * - "Demonstrate an ability to use well-founded and innovative techniques, skills, and tools in computing practices for the purpose of implementing computer solutions that deliver value and accomplish industry-specific goals."
  *
  * Meeting Course Outcome:
- * - The design and implementation of the `addItem`, `getItems`, `updateItem`, `deleteItem`, `addUser`, `checkUser`, and `checkUserExists` methods reflect the use of algorithmic principles in solving data management problems. This includes secure password handling, efficient data retrieval, and ensuring data integrity.
- * - The class structure and its methods illustrate the application of computer science practices and standards, notably in database schema design, SQL query construction, and the use of SQLite for local data storage.
+ * The implementation of the search functionality within the DatabaseHelper class embodies the application of advanced database querying techniques and the utilization of SQLite capabilities to meet specific user needs. This enhancement not only improves the app's usability and data retrieval efficiency but also demonstrates a deep understanding of database management and the ability to integrate complex functionalities into a user-centric application.
  *
- * Reflecting on the Enhancement Process:
- * The development of the `DatabaseHelper` class enhanced  the importance of considering security, efficiency, and maintainability in software design. The introduction of password hashing was particularly enlightening, showcasing the necessity of anticipating and mitigating security vulnerabilities. Optimizing CRUD operations reinforced the value of clean, maintainable code and efficient database access.
+ * Reflecting on the Enhancement:
+ * Enhancing the DatabaseHelper class to include search functionality was an invaluable learning experience that emphasized the importance of database optimization and user-focused design. This process underscored the critical role of data management in software development and reinforced the necessity for continual improvement and adaptation in technology practices.
  *
  * Author: [Jared Semonin]
- * Date: [03/31/2024]
- * Version: 1.0
+ * Date: [04/06/2024]
+ * Version: 2.0
  */
-
 
 
 
@@ -61,7 +66,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Creating tables for items and users
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_ITEMS = "CREATE TABLE " + TABLE_ITEMS + "("
@@ -69,12 +73,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_NAME + " TEXT,"
                 + COLUMN_QUANTITY + " INTEGER)";
         db.execSQL(CREATE_TABLE_ITEMS);
-// Create users table
+
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
                 + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_USER_NAME + " TEXT,"
                 + COLUMN_USER_PASSWORD + " TEXT)";
         db.execSQL(CREATE_USERS_TABLE);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
+        onCreate(db);
     }
     // Adding new user with hashed password
 public void addUser(String username, String password) {
@@ -114,15 +124,9 @@ public void addUser(String username, String password) {
         cursor.close();
         return exists;
 }
-    // Database upgrade logic
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
-        onCreate(db);
-    }
 
-    // Method to add an item Algo
+    // Adds a new item to the database
     public void addItem(String name, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -134,8 +138,7 @@ public void addUser(String username, String password) {
         Log.d("DatabaseHelper", "Item added: Name=" + name + ", Quantity=" + quantity);
 
     }
-    // Method to get all items
-// ALGO
+    // Retrieves all items from the database
     public List<Item> getItems() {
         List<Item> itemList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_ITEMS;
@@ -184,6 +187,8 @@ public void addUser(String username, String password) {
         return item;
     }
 
+    // Updates an existing item's details in the database
+
     public void updateItem(int id, String name, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -201,7 +206,40 @@ public void addUser(String username, String password) {
         db.close();
     }
 
+
+    // New method to fetch filtered items
+    // Method to fetch filtered items based on a query
+    public List<Item> getItemsFilteredBy(String query) {
+
+        // New method implementation for search functionality
+        // Utilizes LIKE query to perform partial matches on the item name
+
+        List<Item> filteredItemList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_ITEMS + " WHERE " + COLUMN_NAME + " LIKE ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{"%" + query + "%"});
+
+        while (cursor.moveToNext()) {
+            int idIndex = cursor.getColumnIndex(COLUMN_ID);
+            int nameIndex = cursor.getColumnIndex(COLUMN_NAME);
+            int quantityIndex = cursor.getColumnIndex(COLUMN_QUANTITY);
+
+            Item item = new Item();
+            item.setId(cursor.getInt(idIndex));
+            item.setName(cursor.getString(nameIndex));
+            item.setQuantity(cursor.getInt(quantityIndex));
+            filteredItemList.add(item);
+        }
+        cursor.close();
+        return filteredItemList;
+    }
+
+
 }
+
+
+
 
 /**
  * Item class to represent each inventory item.

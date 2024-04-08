@@ -1,44 +1,47 @@
 /**
- * DataGridFragment.java
+ * DataGridFragment.java - Version 2.0
  *
  * Purpose:
- * This class represents a fragment within the application that displays a grid of inventory items.
- * It uses a RecyclerView to list items fetched from the database, providing a dynamic and responsive user interface.
- * Users can navigate from this fragment to add new items or view and edit existing item details.
+ * To display a grid of inventory items and allow users to dynamically filter through these items using a search functionality.
  *
- *  Features:
- * - Efficient List Management: Uses RecyclerView for memory-efficient display and scrolling of large datasets.
- * - Dynamic Data Handling: Dynamically fetches inventory data from the SQLite database and updates the UI accordingly.
+ * Features:
+ * - Displays inventory items in a RecyclerView.
+ * - Allows for dynamic searching and filtering of inventory items.
+ * - Navigation to item addition and item details view.
  *
+ * Enhancements:
+ * - Added a search field with real-time filtering capabilities.
  *
- * Algorithmic and UX/UI Design Considerations:
- * - The RecyclerView is set up with a LinearLayoutManager to display items in a linear list.
- * - Custom ItemDecoration is applied to the RecyclerView to manage the spacing between items, enhancing the UI.
- * - Database interactions are handled through the DatabaseHelper class, demonstrating effective use of data structures to fetch and display data.
- * - Bundle data structure is utilized for passing item details between fragments, showcasing efficient data handling and navigation within the app.
+ * Course Outcomes:
+ * - "Design, develop, and deliver professional-quality oral, written, and visual communications that are coherent, technically sound, and appropriately adapted to specific audiences and contexts."
+ * - "Demonstrate an ability to use well-founded and innovative techniques, skills, and tools in computing practices for the purpose of implementing computer solutions that deliver value and accomplish industry-specific goals."
  *
  * Meeting Course Outcome:
- * - The setup and management of the RecyclerView in `setupRecyclerView` method reflect algorithmic thinking in handling UI elements and data presentation. It demonstrates evaluating and applying suitable data structures (like lists) and UI components for optimal performance and user experience.
- * - This class also illustrates the practical application of computer science standards in UI design, particularly in the Android's RecyclerView and Adapter pattern to efficiently manage and display data.
+ * The integration of a dynamic search feature enhances user communication by providing a responsive and user-friendly interface. This directly contributes to developing professional-quality, technically sound applications that are adapted to user needs. The application of TextWatcher for real-time data filtering exemplifies the use of innovative techniques and tools in computing practices, showcasing a practical implementation of computer solutions that deliver significant value and improve user interaction with the application.
  *
- *  * Reflecting on the Enhancement Process:
- *  * Developing the `DataGridFragment` highlighted the challenges and solutions in creating fluid and responsive UIs for data-intensive applications. Learning to effectively use RecyclerView transformed the application's data presentation layer,  theoretically improving scrolling performance and memory usage.
+ * Reflecting on the Enhancement:
+ * The process of adding search functionality underscored the importance of responsive UI design and the application of algorithmic principles in enhancing user experience. It challenged us to think creatively about data manipulation and presentation in Android development, leading to a deeper understanding of dynamic data handling and UI updates based on user interactions. This enhancement not only improved the app's usability but also its adaptability to user needs, demonstrating a key aspect of delivering industry-specific goals through well-founded computing practices.
  *
  * Author: [Jared Semonin]
- * Date: [03/31/2024]
- * Version: 1.0
+ * Date: [04/27/2024]
+ * Version: 2.0
  */
+
 
 
 
 package com.semonin.jjwarehouse;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,15 +51,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+// Version 2.0: Enhanced search functionality with real-time filtering
 public class DataGridFragment extends Fragment {
 
-    public DataGridFragment() {
-        // Required empty public constructor
-    }
+    // Maintains adapter globally for easy access and manipulation across methods.
 
-    public static DataGridFragment newInstance() {
-        return new DataGridFragment();
-    }
+    private InventoryAdapter adapter; // Maintain adapter as a global variable for easy access
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,44 +67,61 @@ public class DataGridFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Set up the RecyclerView to display inventory items
-        setupRecyclerView(view);
+        RecyclerView recyclerView = setupRecyclerView(view); // Assign returned RecyclerView
+        setupSearch(view, recyclerView);
 
-        // Set an OnClickListener to navigate to the item addition fragment
+        // Simplified lambda expression for adding new item button click listener.
+
         ImageButton addDataButton = view.findViewById(R.id.addDataButton);
-
-        addDataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToAddNewItem();
-            }
-        });
+        addDataButton.setOnClickListener(v -> navigateToAddNewItem());
     }
-
-    //ALGO     // Sets up the RecyclerView with a LinearLayoutManager and an adapter
-    private void setupRecyclerView(View view) {
+    // Initializes RecyclerView and returns it
+    private RecyclerView setupRecyclerView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.dataGrid);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Adding spacing between RecyclerView items
-
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_item_spacing); // Define this dimension in your res/values/dimens.xml
-        recyclerView.addItemDecoration(new ItemDecoration(spacingInPixels));
-
-        // Fetching items from the database and setting up the adapter
+        // Fetches items from the database.
 
         DatabaseHelper db = new DatabaseHelper(getContext());
         List<Item> items = db.getItems();
 
-        InventoryAdapter adapter = new InventoryAdapter(items, new InventoryAdapter.OnItemClickListener() {
+        // Adapter initialization moved here for clarity and to ensure global access.
+
+        adapter = new InventoryAdapter(items, this::navigateToGridItemFragmentWithItemDetails); // Initialize adapter here
+        recyclerView.setAdapter(adapter);
+
+        return recyclerView;
+    }
+
+    // New method for implementing search functionality.
+    private void setupSearch(View view, RecyclerView recyclerView) {
+        EditText searchField = view.findViewById(R.id.search_field);
+        searchField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onItemClick(Item item) {
-                navigateToGridItemFragmentWithItemDetails(item);
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filterData(editable.toString()); // Filters data as the user types.
             }
         });
-        recyclerView.setAdapter(adapter);
     }
-                // bundle    // Navigates to the GridItem fragment to display or edit the details of an item
+
+
+    // Filters data based on the search query
+    private void filterData(String query) {
+        DatabaseHelper db = new DatabaseHelper(getContext());
+        List<Item> filteredItems = db.getItemsFilteredBy(query);
+        adapter.updateData(filteredItems); // Update the adapter with filtered data
+    }
+
+
+    // Navigates to the GridItem fragment to display or edit the details of an item
     private void navigateToGridItemFragmentWithItemDetails(Item item) {
         GridItem gridItemFragment = new GridItem();
 
