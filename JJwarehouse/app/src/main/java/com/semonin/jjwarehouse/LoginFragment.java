@@ -57,35 +57,35 @@ public class LoginFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the XML layout for this fragment, setting up the user interface for login
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        // Initialize  UI components here
+        // Initialization of UI components to gather user inputs
         editTextUsername = view.findViewById(R.id.username);
         editTextPassword = view.findViewById(R.id.password);
         ImageButton loginButton = view.findViewById(R.id.loginButton);
         ImageButton createAccountButton = view.findViewById(R.id.createAccountButton);
 
-        // Handle login button click
+        // Setup click listener for the login button
 
         loginButton.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
 
-            // Authenticate user
+            // Attempt to authenticate the user
 
             DatabaseHelper db = new DatabaseHelper(getContext());
 
             if (db.checkUser(username, password)) {
-                // Navigate to the DataGridFragment upon successful login
+                // Successful login, navigate to the inventory display fragment
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DataGridFragment()).commit();
             } else {
-                // Notify user of invalid credentials
+                // Failed login, notify user of invalid credentials
                 Toast.makeText(getContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Navigate to the registration screen
+        // Setup click listener for navigating to the registration page
         createAccountButton.setOnClickListener(v -> getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RegistrationFragment()).addToBackStack(null).commit());
 
         return view;

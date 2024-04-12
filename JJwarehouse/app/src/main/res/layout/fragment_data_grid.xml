@@ -7,7 +7,7 @@
     android:background="@drawable/gradient_background"
     tools:context=".DataGridFragment">
 
-    <!-- Search Input Field -->
+    <!-- Search Input Field added to allow users to enter in item to search -->
     <EditText
         android:id="@+id/search_field"
         android:layout_width="340dp"
@@ -25,6 +25,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/Widget.AppCompat.EditText"/>
+
+
+
 
     <!-- RecyclerView for displaying a list of data -->
     <androidx.recyclerview.widget.RecyclerView
@@ -45,4 +48,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_add_circle_24"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="56dp"
+        app:backgroundTint="@color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

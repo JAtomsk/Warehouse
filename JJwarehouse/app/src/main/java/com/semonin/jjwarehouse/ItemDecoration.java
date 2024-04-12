@@ -1,28 +1,24 @@
 /**
- * ItemDecoration
+ * ItemDecoration for RecyclerView
  *
  * Purpose:
- * Adds uniform spacing between items in a RecyclerView. This class is used to improve the visual appearance
- * of RecyclerView items by ensuring there is consistent padding around them.
+ * Enhances the visual aesthetics of RecyclerView by adding uniform spacing between items.
+ * This class is critical for achieving consistent padding and margins in lists, grids, or any collections managed by RecyclerView.
  *
  * How it Works:
- * - It applies uniform spacing (padding) to the left, right, and bottom sides of each item.
- * - For the first item in the RecyclerView, it also applies spacing to the top to ensure consistent padding around the item.
+ * - It assigns specified padding (space) to all sides of an item view except the top side of subsequent items to prevent doubling of space.
+ * - The first item receives top padding to ensure uniformity from the collection's start.
  *
  * Usage:
- * Add an instance of this class to a RecyclerView using the addItemDecoration() method to apply consistent spacing
- * between items within the RecyclerView.
+ * Utilize this decorator by attaching it to a RecyclerView to ensure each item is distinctly separated, enhancing readability and design.
+ * Example usage within a Fragment or Activity:
+ *   int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.item_spacing);
+ *   recyclerView.addItemDecoration(new ItemDecoration(spacingInPixels));
  *
- * Example:
- * int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.item_spacing);
- * recyclerView.addItemDecoration(new ItemDecoration(spacingInPixels));
- *
- * Author: [Jared Semonin]
- * Date: [03/31/2024]
- * Version: 1.0
+ * Author: Jared Semonin
+ * Date: 04/11/2024
+ * Version: 2.0
  */
-
-
 
 package com.semonin.jjwarehouse;
 
@@ -34,21 +30,31 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ItemDecoration extends RecyclerView.ItemDecoration {
     private int space;
 
-    // Constructor taking the size of the space to be applied as padding around the items
-
+    /**
+     * Constructor to set the spacing size.
+     * @param space Integer value representing the pixels to be used as space around each item.
+     */
     public ItemDecoration(int space) {
         this.space = space;
     }
 
+    /**
+     * Determines the size and location of the offset to apply to each item within the RecyclerView.
+     * This method is automatically invoked by the RecyclerView to retrieve each item's offsets.
+     *
+     * @param outRect Rect to receive the output.
+     * @param view The child view to decorate
+     * @param parent RecyclerView this ItemDecoration is applied to
+     * @param state The current state of RecyclerView
+     */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        // Apply the specified spacing as padding around the item
-
+        // Always apply left, right, and bottom spacing
         outRect.left = space;
         outRect.right = space;
         outRect.bottom = space;
 
-        // Add top margin only for the first item to avoid double space between items
+        // Apply top spacing only for the first item to maintain uniform spacing from the start
         if (parent.getChildAdapterPosition(view) == 0) {
             outRect.top = space;
         } else {

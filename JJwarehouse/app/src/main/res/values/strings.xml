@@ -23,4 +23,11 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="backButton">Back</string>
     <string name="search_hint">Item Search</string>
+    <string name="sort">sort</string>
+    <string-array name="sorting_options">
+        <item>Alphabetically</item>
+        <item>Quantity Ascending</item>
+        <item>Quantity Descending</item>
+    </string-array>
+
 </resources>
