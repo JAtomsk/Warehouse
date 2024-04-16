@@ -2,34 +2,51 @@
  * LoginFragment
  *
  * Purpose:
- * This fragment is responsible for managing user authentication within the app. It provides input fields for the
- * username and password, and buttons for initiating the login process or navigating to the account creation screen.
+ * This fragment is now responsible for managing user authentication within the app by interfacing with a cloud-based database
+ * via an API instead of using a local SQLite database. This change enables more scalable, secure, and versatile user management.
  *
  * How it Works:
- * - The user enters their username and password, which are then passed to the DatabaseHelper for verification.
- * - If the credentials are valid, the user is navigated to the DataGridFragment, where they can view the inventory.
- * - If the credentials are invalid, a toast message informs the user of incorrect login details.
- * - The "Create Account" button navigates the user to the RegistrationFragment for account creation.
+ * - The user inputs their username and password, which are sent to the cloud database through the ApiInterface.
+ * - The authentication response determines whether the user proceeds to the DataGridFragment or receives an error message.
  *
  * Security Features:
- * - Implements SHA-256 hashing for password storage and verification, enhancing the security of user credentials.
- * - By hashing passwords before storage and comparing hashed passwords during login, this class demonstrates an anticipatory approach to security, protecting against common vulnerabilities such as plain-text password storage.
- * - The use of prepared statements in DatabaseHelper for querying the database helps prevent SQL injection attacks, further securing the application's data layer.
+ * - Utilizes bcrypt via the API for enhanced security in password storage and verification.
+ * - Integrates Retrofit for secure HTTP communication, significantly reducing vulnerabilities associated with direct database connections.
+ * - Implements JSON Web Tokens (JWT) for maintaining secure sessions.
+ Meeting Course Outcome:
+ * This class demonstrates an advanced understanding of software architecture by integrating modern cloud-based technologies and security practices.
+ * It addresses the necessity for scalable and secure API interactions in modern Android applications, emphasizing best practices in network security and data management.
  *
- * Meeting Course Outcome:
- * This class aligns with the course outcome of developing a security mindset by implementing best practices in secure
- * software design. Specifically, it addresses the need to anticipate and mitigate potential vulnerabilities in software
- * architecture and design, ensuring the privacy and security of user data through:
- * - Secure hashing of passwords (SHA-256).
- * - Use of secure database access patterns to protect against SQL injection.
  *
- * Reflecting on the Enhancement Process:
- * Enhancing the app to include secure login functionality presented challenges, particularly in securely managing user credentials and ensuring a robust authentication mechanism. Implementing SHA-256 hashing and learning about secure database operations were essential steps in addressing these challenges. This process highlighted the importance of a proactive security mindset in software development, emphasizing the need to design with privacy and data security as central considerations.
+ *   Differences and Reasons for Changes:
  *
- * Author: [Jared Semonin]
- * Date: [03/31/2024]
- * Version: 1.0
+ *   From SQLite to Cloud Database:
+ *   - The original class used local SQLite, limiting the app to single-device use without real-time data syncing.
+ *   - The new setup using a cloud database through an API allows for real-time updates and access from multiple devices,
+ *     enhancing scalability and flexibility.
+ *
+ *   Security Improvements:
+ *   - The shift to bcrypt for password hashing (implemented via the API) and the use of JWT for session management
+ *     significantly enhance security.
+ *   - These methods are more robust against attacks and ensure secure transmission of sensitive information over the network.
+ *
+ *   API Communication:
+ *   - Retrofit is used for network operations instead of direct database interactions, which abstracts the data layer
+ *     and reduces direct exposure of the database to the app.
+ * - This method adheres to best practices in modern application architecture, ensuring better maintenance and security.
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * Author: Jared Semonin
+ * Date: 04/14/2024
+ * Version: 3.0
  */
+
+
 
 package com.semonin.jjwarehouse;
 
@@ -37,57 +54,77 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 
     private EditText editTextUsername;
     private EditText editTextPassword;
-
+    private ApiInterface apiInterface;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        // Inflate the XML layout for this fragment, setting up the user interface for login
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        // Initialize EditText fields for user input
 
-        // Initialization of UI components to gather user inputs
         editTextUsername = view.findViewById(R.id.username);
         editTextPassword = view.findViewById(R.id.password);
+        // Initialize buttons and setup listeners for login and account creation
+
         ImageButton loginButton = view.findViewById(R.id.loginButton);
         ImageButton createAccountButton = view.findViewById(R.id.createAccountButton);
+        // Initialize the API interface to interact with the cloud database
 
-        // Setup click listener for the login button
+        apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
         loginButton.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
-
-            // Attempt to authenticate the user
-
-            DatabaseHelper db = new DatabaseHelper(getContext());
-
-            if (db.checkUser(username, password)) {
-                // Successful login, navigate to the inventory display fragment
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DataGridFragment()).commit();
-            } else {
-                // Failed login, notify user of invalid credentials
-                Toast.makeText(getContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
-            }
+            loginUser(new User(username, password));
         });
 
-        // Setup click listener for navigating to the registration page
+        // Set listener for the create account button to transition to the RegistrationFragment
+
         createAccountButton.setOnClickListener(v -> getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RegistrationFragment()).addToBackStack(null).commit());
 
         return view;
+    }
+
+    private void loginUser(User user) {
+        // Call the API to authenticate the user
+
+        Call<LoginResponse> call = apiInterface.loginUser(user);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Handle successful login by navigating to the inventory display fragment
+
+                    Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                    // Navigate to the inventory display fragment
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DataGridFragment()).commit();
+                } else {
+                    // Handle login failure by displaying invalid credentials message
+
+                    Toast.makeText(getContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                // Handle errors during API communication
+
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
