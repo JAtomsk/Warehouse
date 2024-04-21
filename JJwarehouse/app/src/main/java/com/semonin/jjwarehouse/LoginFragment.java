@@ -13,7 +13,13 @@
  * - Utilizes bcrypt via the API for enhanced security in password storage and verification.
  * - Integrates Retrofit for secure HTTP communication, significantly reducing vulnerabilities associated with direct database connections.
  * - Implements JSON Web Tokens (JWT) for maintaining secure sessions.
- Meeting Course Outcome:
+ *
+ *
+ Meeting Course Outcome: 5
+
+ "DevelopED a security mindset that anticipates adversarial exploits in software architecture and designs to expose potential vulnerabilities, mitigate design flaws,
+ and ensure privacy and enhanced security of data and resources by completing the following enhancements_________"
+
  * This class demonstrates an advanced understanding of software architecture by integrating modern cloud-based technologies and security practices.
  * It addresses the necessity for scalable and secure API interactions in modern Android applications, emphasizing best practices in network security and data management.
  *
@@ -70,6 +76,7 @@ public class LoginFragment extends Fragment {
     private EditText editTextPassword;
     private ApiInterface apiInterface;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -100,31 +107,31 @@ public class LoginFragment extends Fragment {
     }
 
     private void loginUser(User user) {
-        // Call the API to authenticate the user
-
         Call<LoginResponse> call = apiInterface.loginUser(user);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Handle successful login by navigating to the inventory display fragment
+                    // Save the token using SharedPreferencesManager
+                    SharedPreferenceManager.saveToken(getContext(), response.body().getToken());
+
 
                     Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                    // Navigate to the inventory display fragment
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DataGridFragment()).commit();
+                    navigateToInventory();
                 } else {
-                    // Handle login failure by displaying invalid credentials message
-
                     Toast.makeText(getContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                // Handle errors during API communication
-
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void navigateToInventory() {
+        // Navigate to the inventory display fragment after successful login and token storage
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DataGridFragment()).commit();
     }
 }

@@ -31,26 +31,47 @@
 package com.semonin.jjwarehouse;
 
 
-public class LoginResponse {
-    // Field to store the authentication token
+import com.google.gson.annotations.SerializedName;
 
+public class LoginResponse {
+    private String role;
+    @SerializedName("success")
+    private boolean success;
+
+    @SerializedName("token")
     private String token;
 
-    // Field to store messages from the server, typically regarding the success or failure of the login attempt
-
+    @SerializedName("message")
     private String message;
-
 
     /**
      * Constructor for LoginResponse
+     * @param success Indicates if the login was successful.
      * @param token The token issued by the server for session management.
      * @param message A message from the server, usually indicating the status of the login attempt.
      */
-    public LoginResponse(String token, String message) {
+    public LoginResponse(boolean success, String token, String message, String role) {
+        this.success = success;
         this.token = token;
+        this.role = role;
         this.message = message;
     }
 
+    /**
+     * Checks if the login was successful.
+     * @return true if successful, otherwise false.
+     */
+    public boolean isSuccess() {
+        return success;
+    }
+
+    /**
+     * Sets the success status of the login.
+     * @param success true if login was successful, otherwise false.
+     */
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
     /**
      * Gets the current token.
@@ -60,7 +81,6 @@ public class LoginResponse {
         return token;
     }
 
-
     /**
      * Sets a new token.
      * @param token A string containing the new token.
@@ -68,7 +88,6 @@ public class LoginResponse {
     public void setToken(String token) {
         this.token = token;
     }
-
 
     /**
      * Gets the current message.
@@ -78,12 +97,20 @@ public class LoginResponse {
         return message;
     }
 
-
     /**
      * Sets a new message.
      * @param message A string containing the new message.
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    // Getters and setters
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

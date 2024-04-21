@@ -10,6 +10,11 @@
  * - The API checks if the username already exists and, if not, creates a new user account.
  * - Successful registrations are confirmed with a message, and failures due to duplicate usernames or server errors are also handled.
  *
+ * CourseOutcome 5
+ * "DevelopED a security mindset that anticipates adversarial exploits in software architecture and designs to expose potential vulnerabilities, mitigate design flaws,
+ * and ensure privacy and enhanced security of data and resources by completing the following enhancements_________"
+ *
+ *
  * Features:
  * - Input validation ensures that the username and password are not empty and that the passwords match.
  * - The cloud API integration helps avoid duplicate usernames and centralizes user management.

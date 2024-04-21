@@ -30,11 +30,23 @@
 
 package com.semonin.jjwarehouse;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
+
+
     /**
      * Defines a POST method for registering a new user on the server.
      * The server endpoint "register" expects a user object in the request body.
@@ -53,6 +65,22 @@ public interface ApiInterface {
     Call<LoginResponse> loginUser(@Body User user);
 
     @POST("addItem")
-    Call<ItemResponse> addItem(@body Item item);
+    Call<ItemResponse> addItem(@Header("Authorization") String authToken, @Body Item item);
+
+    @GET("getItems")
+    Call<ItemsResponse> getItems(@Header("Authorization") String authToken);
+
+    @GET("getItem/{id}")
+    Call<ItemResponse> getItemById(@Header("Authorization") String authToken, @Path("id") int itemId);
+
+    @GET("getItems")
+    Call<ItemsResponse> getFilteredItems(@Header("Authorization") String authToken, @Query("search") String searchQuery);
+
+    @PUT("updateItem")
+    Call<ItemResponse> updateItem(@Header("Authorization") String authToken, @Body Item item);
+
+    @DELETE("deleteItem/{id}")
+    Call<ItemResponse> deleteItem(@Header("Authorization") String authToken, @Path("id") int itemId);
 }
+
 

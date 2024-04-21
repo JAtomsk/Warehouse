@@ -37,7 +37,7 @@
  * Author: [Jared Semonin]
  * Date: [04/06/2024]
  * Version: 2.1
- */
+ *
 
 
 
@@ -58,7 +58,7 @@ import java.util.List;
 /**
  * Handles database operations for inventory and user management.
  * Version 2.1: Includes optimized search and data handling features.
- */
+ *
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -266,7 +266,7 @@ public void addUser(String username, String password) {
 
 /**
  * Item class for representing each item with optimized getters and setters.
- */
+
     class Item {
     private int id;
     private String name;
@@ -293,3 +293,4 @@ public void addUser(String username, String password) {
  *
  *
  */
+

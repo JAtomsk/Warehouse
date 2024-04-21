@@ -39,6 +39,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +57,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
      */
     private final OnItemClickListener listener; // Click listener for each item
 
+
     // Interface defining an item click listener to enable interaction with each item
     public interface OnItemClickListener {
         void onItemClick(Item item);
@@ -64,7 +67,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
      * Constructor initializing the adapter with a list of items and an item click listener.
      * Provides an efficient way to handle item data and interactions.
      */    public InventoryAdapter(List<Item> itemList, OnItemClickListener listener) {
-        this.itemList = itemList;
+        // Initialize with an empty list if null is received
+        this.itemList = (itemList != null) ? itemList : new ArrayList<>();
         this.listener = listener;
     }
 
@@ -100,16 +104,17 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
      */
     @Override
     public int getItemCount() {
-        return itemList.size(); // Return the size of the dataset
+        return itemList.size(); // Now this won't cause a NullPointerException
     }
+
 
     /**
      * Updates the data in the adapter dynamically, optimizing for efficient data change handling.
      * Reduces the overhead of updating the entire data set and utilizes notifyDataSetChanged to refresh the view.
      */
     public void updateData(List<Item> newItems) {
-        this.itemList = newItems; // Update the list with filtered or unfiltered data
-        notifyDataSetChanged(); // Notify any registered observers that the data set has changed
+        this.itemList = (newItems != null) ? newItems : new ArrayList<>();
+        notifyDataSetChanged();
     }
 
 

@@ -54,17 +54,18 @@
  */
 
 
-
-
 package com.semonin.jjwarehouse;
 
+import android.util.Log;
+
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -75,133 +76,127 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Version 2.1: Enhanced search functionality with real-time filtering.
- * Demonstrates optimization, time complexity, and efficiency of algorithmic logic in managing RecyclerView and database interactions.
- * Reflects enhancements that meet the course outcomes related to algorithmic principles and effective communication of technical solutions.
- */public class DataGridFragment extends Fragment {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    // Global adapter for managing RecyclerView content; allows for efficient data manipulation across different methods.
-
-    private InventoryAdapter adapter; // Maintain adapter as a global variable for easy access
+public class DataGridFragment extends Fragment {
+    private InventoryAdapter adapter;
+    private ApiInterface apiInterface;
+    private String authToken; // JWT token for authentication
+    private Handler searchHandler = new Handler();
+    private Runnable searchRunnable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_data_grid, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // RecyclerView setup is encapsulated in a method for better readability and separation of concerns.
+        apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
+        authToken = "Bearer " + SharedPreferenceManager.getToken(getContext()); // Retrieve and prepare the JWT token for authorization header
 
-        RecyclerView recyclerView = setupRecyclerView(view); // Assign returned RecyclerView
-        setupSearch(view, recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.dataGrid);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Setup add data button with a lambda expression for cleaner event handling.
+        adapter = new InventoryAdapter(new ArrayList<>(), this::navigateToGridItemFragmentWithItemDetails);
+        recyclerView.setAdapter(adapter);
+
+        fetchData();
+        setupSearch(view);
 
         ImageButton addDataButton = view.findViewById(R.id.addDataButton);
         addDataButton.setOnClickListener(v -> navigateToAddNewItem());
     }
 
-
-    /**
-     * Sets up RecyclerView with optimized LinearLayoutManager and custom adapter.
-     * Efficient data retrieval and UI rendering with LinearLayoutManager to manage layout.
-     */    private RecyclerView setupRecyclerView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.dataGrid);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // Efficient database access and handling to fetch items.
-
-        DatabaseHelper db = new DatabaseHelper(getContext());
-        List<Item> items = db.getItems();
-
-        // Adapter initialization for better encapsulation and global access.
-
-        adapter = new InventoryAdapter(items, this::navigateToGridItemFragmentWithItemDetails); // Initialize adapter here
-        recyclerView.setAdapter(adapter);
-
-        return recyclerView;
-    }
-
-    /**
-     * Sets up search functionality with a TextWatcher to filter data in real-time.
-     * Utilizes efficient string manipulation and database querying for optimal performance.
-     */    private void setupSearch(View view, RecyclerView recyclerView) {
-        EditText searchField = view.findViewById(R.id.search_field);
-        searchField.addTextChangedListener(new TextWatcher() {
+    private void fetchData() {
+        String token = SharedPreferenceManager.getToken(getContext());
+        apiInterface.getItems("Bearer " + token).enqueue(new Callback<ItemsResponse>() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().getItems() != null) {
+                    adapter.updateData(response.body().getItems());
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch items: " + (response.body() == null ? "No response" : response.body().getMessage()), Toast.LENGTH_SHORT).show();
+                    adapter.updateData(new ArrayList<>()); // Pass an empty list if fetch fails
+                }
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            // Post-text change event to filter data based on user input.
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                filterData(editable.toString()); // Filters data as the user types.
+            public void onFailure(Call<ItemsResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                adapter.updateData(new ArrayList<>()); // Pass an empty list on failure
             }
         });
     }
 
+    private void setupSearch(View view) {
+        EditText searchField = view.findViewById(R.id.search_field);
+        searchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-    /**
-     * Filters data based on user query with an efficient search mechanism.
-     * Demonstrates time complexity considerations with direct database access and updating RecyclerView.
-     */    private void filterData(String query) {
-        DatabaseHelper db = new DatabaseHelper(getContext());
-        List<Item> filteredItems = db.getItemsFilteredBy(query);
-        adapter.updateData(filteredItems); // Update the adapter with filtered data
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Cancel any previous search operations
+                searchHandler.removeCallbacks(searchRunnable);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Delay new search request until user stops typing for 300ms
+                searchRunnable = () -> filterData(s.toString());
+                searchHandler.postDelayed(searchRunnable, 300);
+            }
+        });
     }
 
+    private void filterData(String query) {
+        String token = SharedPreferenceManager.getToken(getContext());
+        apiInterface.getFilteredItems("Bearer " + token, query).enqueue(new Callback<ItemsResponse>() {
+            @Override
+            public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    adapter.updateData(response.body().getItems()); // Update adapter with filtered data
+                } else {
+                    Toast.makeText(getContext(), "Failed to fetch items: " + (response.body() == null ? "No response" : response.body().getMessage()), Toast.LENGTH_SHORT).show();
+                }
+            }
 
-    /**
-     * Navigation method encapsulating Fragment transaction logic for item detail viewing.
-     * Efficiently handles fragment transactions and data passing.
-     */    private void navigateToGridItemFragmentWithItemDetails(Item item) {
-        GridItem gridItemFragment = new GridItem();
-
-        // Pass item details to GridItemFragment
-        Bundle args = new Bundle();
-        args.putInt("itemId", item.getId()); // Assuming Item class has getId()
-        args.putString("itemName", item.getName());
-        args.putInt("itemQuantity", item.getQuantity());
-        gridItemFragment.setArguments(args);
-
-        // Perform the fragment transaction
-        if (isAdded()) {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, gridItemFragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
+            @Override
+            public void onFailure(Call<ItemsResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-    // Simple method to navigate to adding a new item, showcasing clear and efficient Fragment management.
+
     private void navigateToAddNewItem() {
         GridItem gridItemFragment = new GridItem();
-        // Perform the fragment transaction to add a new item
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, gridItemFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void navigateToGridItemFragmentWithItemDetails(Item item) {
+        GridItem fragment = new GridItem();
+        Bundle args = new Bundle();
+        args.putInt("itemId", item.getId());
+        args.putString("itemName", item.getName());
+        args.putInt("itemQuantity", item.getQuantity());
+        fragment.setArguments(args);
+
         if (isAdded()) {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, gridItemFragment)
+                    .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
                     .commit();
         }
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Refresh RecyclerView content to reflect any updates or changes efficiently.
-
-        setupRecyclerView(getView());
-    }
 }
-
 
