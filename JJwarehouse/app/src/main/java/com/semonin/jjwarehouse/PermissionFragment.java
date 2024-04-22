@@ -1,5 +1,28 @@
-
-
+/**
+ * Class Name: PermissionFragment
+ *
+ * Purpose:
+ * The PermissionFragment class is designed as a preparatory component for future app enhancements
+ * that will require user permissions. This implementation serves to demonstrate the application's
+ * capability to integrate permission requests seamlessly, adhering to Android's security and privacy requirements.
+ *
+ * Features:
+ * - Future-Ready Design: Sets a foundation for integrating permission handling as new features are added.
+ * - Modular and Scalable: Provides a template that can be easily adapted and expanded for various permission requirements.
+ *
+ * Usage:
+ * This fragment is currently a template and does not directly impact the application's functionality.
+ * It will be utilized to handle permission requests dynamically as part of future development when features
+ * requiring user permissions are implemented.
+ *
+ * Potential Enhancements:
+ * - Dynamic Permission Handling: To support features requiring access to sensitive user data or system features.
+ * - User Experience Enhancements: Implementing informative permission request dialogs to enhance transparency and user trust.
+ *
+ * Author: Jared Semonin
+ * Date: 04/11/2024
+ * Version: 1.0 - Template for future implementation
+ *
 
 package com.semonin.jjwarehouse;
 
@@ -45,3 +68,4 @@ public class PermissionFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_permission, container, false);
     }
 }
+*/

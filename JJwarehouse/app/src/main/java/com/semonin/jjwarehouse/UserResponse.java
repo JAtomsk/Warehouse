@@ -1,45 +1,28 @@
 /**
- * UserResponse Class
- *
+ * Class Name: UserResponse
  * Purpose:
- * This class is designed to parse and encapsulate the response data from the API when a user registers or completes an action
- * that requires a server response. It specifically handles responses that include a message and a user ID, allowing the app
- * to display feedback to the user and manage user identifiers within the system.
- *
+ * - To parse and encapsulate the response data from the API when a user registers or completes an action that requires server interaction.
+ * - Specifically designed to handle responses that include a message and a user ID, which aids the app in providing appropriate feedback and managing user identifiers.
  * Features:
- * - Message: A string containing feedback or a status message from the API about the operation performed.
- * - UserId: An integer representing the unique identifier for the user assigned by the database.
- *
+ * - Message: Provides feedback or a status message from the API concerning the performed operation.
+ * - UserId: Serves as a unique identifier for the user as assigned by the database.
  * Usage:
- * This class is used in the network communication layer of the app to handle the data returned by the server after a user
- * registers, logs in, or performs other actions that require a response. It allows the application to react appropriately
- * based on the server's response, such as directing the user to the login screen after successful registration or displaying
- * an error message if something goes wrong.
- *
+ * - Utilized in the network communication layer to manage data returned by server post user interactions such as registrations, logins, or other actions requiring server feedback.
+ * - Allows the application to respond properly based on the server's feedback, such as navigating to a login screen post-registration or displaying an error message on failure.
  * Example:
- * When a user registers, the API might respond with a UserResponse object containing a success message and the user's new ID.
- * The application can then use this ID for session management or direct the user accordingly based on the provided message.
- *
+ * - On user registration, the API might return a UserResponse object containing a message like "Registration Successful" and the new user's ID, which the app can then use for session management or appropriate user direction.
  * Author: Jared Semonin
- * Date: 04/14/2024
+ * Date: 04/21/2024
  */
-
-
-
 
 package com.semonin.jjwarehouse;
  //used to parse the response from the API when a user registers.
 public class UserResponse {
-     // Field to store the message from the API
-
-     private String message;
-     // Field to store the user ID assigned by the database
-
-     private int userId;
-
+     private String message; // Message from the API indicating the outcome of the operation
+     private int userId; // Unique identifier for the user assigned during the operation
 
      /**
-      * Constructor for creating a UserResponse object with a message and user ID.
+      * Constructor for UserResponse.
       * @param message The message from the API indicating the outcome of the operation.
       * @param userId The unique identifier for the user assigned during the operation.
       */
@@ -50,13 +33,12 @@ public class UserResponse {
     }
 
      /**
-      * Gets the message from the API.
+      * Gets the message provided by the API.
       * @return A string representing the message from the API.
       */
      public String getMessage() {
          return message;
      }
-
 
      /**
       * Sets a new message from the API.

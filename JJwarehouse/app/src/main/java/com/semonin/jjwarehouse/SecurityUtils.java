@@ -1,50 +1,42 @@
 /**
- * SecurityUtils
+ * SecurityUtils Class
  *
  * Purpose:
- * Provides cryptographic services, specifically offering a secure method for hashing passwords. This class is essential
- * for ensuring that passwords are handled securely within the application, adhering to industry standards by using the
- * SHA-256 hashing algorithm.
+ * Initially used for providing cryptographic utilities within the application, specifically for hashing passwords with SHA-256.
+ * This class was crucial for ensuring password security when the application utilized an SQLite database, helping to safeguard
+ * user data by preventing passwords from being stored in plaintext.
  *
  * Features:
- * - SHA-256 Hashing: Employs SHA-256 to ensure passwords are securely hashed before storage or verification. This
- *   method produces a fixed-size hash (256 bits) which is non-reversible, adding a layer of security against password
- *   cracking attempts.
+ * - SHA-256 Hashing: Implements SHA-256 to securely hash passwords, providing a non-reversible, fixed-size hash.
+ *   This method is essential for protecting passwords against various security threats, including brute force attacks.
  *
- * How it Works:
- * - Converts a plaintext password into a byte array.
- * - Uses Java's MessageDigest to apply SHA-256 hashing.
- * - Transforms the resulting hash byte array into a readable hexadecimal format.
+ * Evolution of Security Measures:
+ * Although effective during the initial stages of the application, the SecurityUtils class was phased out as the application
+ * transitioned to a more secure and robust user authentication system using MySQL and bcrypt. Bcrypt enhances security by
+ * being computationally intensive and automatically incorporating salt to defend against rainbow table attacks.
+ * This shift was part of a broader enhancement to address growing security needs and implement industry-standard practices.
  *
- * Meeting Course Outcome:
- * Demonstrates the practical implementation of secure coding practices, specifically in the context of user authentication
- * and data protection. By employing SHA-256, the class meets industry-specific goals of maintaining data integrity and
- * security.
- *
- * Reflecting on the Enhancement Process:
- * The introduction of SHA-256 hashing was crucial for improving the application's security posture. It required an
- * understanding of Java's cryptographic API and careful consideration of how security impacts the overall application
- * architecture. Implementing this function was a key step in ensuring that all user passwords are handled in a manner
- * that prevents direct access to sensitive data, thus upholding best practices for data security.
+ * Usage:
+ * The class was utilized in earlier versions of the application where security practices necessitated an in-house solution
+ * for password management. It is included in the current codebase as a historical reference to demonstrate the application’s
+ * commitment to evolving security practices and adapting to enhanced security measures.
  *
  * Author: Jared Semonin
- * Date: 04/11/2024
+ * Date: 04/21/2024
  * Version: 2.0
- */
-
+ *
 package com.semonin.jjwarehouse;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 public class SecurityUtils {
 
-    /**
+    **
      * Hashing Using SHA-256
      *
      * @param passwordToHash The password to hash.
      * @return the hashed password as a hex string, or null if hashing failed
-     */
-
+     *
     public static String hashPassword(String passwordToHash) {
         try {
             // Create MessageDigest instance for SHA-256
@@ -66,3 +58,4 @@ public class SecurityUtils {
         }
     }
 }
+ */

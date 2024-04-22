@@ -24,10 +24,9 @@
  * Accessed from the main activity or the login screen when a user opts to register a new account.
  *
  * Author: Jared Semonin
- * Date: 04/11/2024
+ * Date: 04/21/2024
  * Version: 3.0
  */
-
 package com.semonin.jjwarehouse;
 
 import android.os.Bundle;
@@ -45,40 +44,38 @@ import retrofit2.Response;
 
 public class RegistrationFragment extends Fragment {
 
-    private EditText editTextUsername;
-    private EditText editTextPassword;
-    private EditText editTextConfirmPassword;
+    private EditText editTextUsername; // Input field for username
+    private EditText editTextPassword; // Input field for password
+    private EditText editTextConfirmPassword; // Input field for password check
     private ApiInterface apiInterface; // Retrofit API Interface
 
     public RegistrationFragment() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_registration, container, false);
-
         editTextUsername = view.findViewById(R.id.registrationUsername);
         editTextPassword = view.findViewById(R.id.registrationPassword);
         editTextConfirmPassword = view.findViewById(R.id.registrationPasswordConfirm);
+
         // Initialize submit button and set up the click listener for user registration
-
         ImageButton submitButton = view.findViewById(R.id.registrationSubmit);
-        // Retrofit API interface for making network calls
 
+        // Retrofit API interface for making network calls
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
         submitButton.setOnClickListener(v -> {
-            // Initialize EditText fields for user input
 
+            // Initialize EditText fields for user input
             String username = editTextUsername.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
             String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
             // Validate user input for non-empty and matching passwords
-
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(getContext(), "Username or password cannot be empty.", Toast.LENGTH_SHORT).show();
                 return;
@@ -88,12 +85,10 @@ public class RegistrationFragment extends Fragment {
                 Toast.makeText(getContext(), "Passwords do not match.", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             // Proceed with the API call to register the user if validations pass
             registerUser(new User(username, password));
         });
         // Initialize back button to allow users to return to the previous screen
-
         ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStack());
 
@@ -101,28 +96,27 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void registerUser(User user) {
-        // Make an asynchronous API call to register the user
 
+        // Make an asynchronous API call to register the user
         Call<UserResponse> call = apiInterface.registerUser(user);
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                // Handle successful registration
 
+                // Handle successful registration
                 if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(getContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
                     // Optionally navigate to login after successful registration
                 } else {
                     // Handle registration failure, typically due to a duplicate username
-
                     Toast.makeText(getContext(), "Registration failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                // Handle errors during the network request
 
+                // Handle errors during the network request
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -84,44 +84,62 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DataGridFragment extends Fragment {
-    private InventoryAdapter adapter;
-    private ApiInterface apiInterface;
+    private InventoryAdapter adapter; // Adapter to manage the list of items in the RecyclerView.
+    private ApiInterface apiInterface; // Interface to call backend API methods.
     private String authToken; // JWT token for authentication
-    private Handler searchHandler = new Handler();
-    private Runnable searchRunnable;
+    private Handler searchHandler = new Handler(); // Handler to manage search delays for improved user experience
+    private Runnable searchRunnable; // Runnable for executing the delayed search.
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment.
         return inflater.inflate(R.layout.fragment_data_grid, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Initialize the API interface for network interactions.
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
         authToken = "Bearer " + SharedPreferenceManager.getToken(getContext()); // Retrieve and prepare the JWT token for authorization header
 
         RecyclerView recyclerView = view.findViewById(R.id.dataGrid);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Initialize the adapter with an empty list and set it to the RecyclerView.
         adapter = new InventoryAdapter(new ArrayList<>(), this::navigateToGridItemFragmentWithItemDetails);
         recyclerView.setAdapter(adapter);
 
-        fetchData();
-        setupSearch(view);
+        fetchData(); // Initial fetch to populate the Recyclerview data grid
+        setupSearch(view); // Setup the search functionality
 
         ImageButton addDataButton = view.findViewById(R.id.addDataButton);
+
+        // Listener for adding a new item.
         addDataButton.setOnClickListener(v -> navigateToAddNewItem());
     }
 
     private void fetchData() {
+
+        // Retrieve the token and form the authorization header.
         String token = SharedPreferenceManager.getToken(getContext());
+        // Fetching data from the server. The efficiency of this operation depends on the amount of data.
+        // In terms of Big O notation, if each item is processed individually (e.g., parsed or transformed),
+        // the time complexity can be considered O(n), where n is the number of items.
         apiInterface.getItems("Bearer " + token).enqueue(new Callback<ItemsResponse>() {
             @Override
             public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getItems() != null) {
+                    // Updating the UI with the fetched items. Assuming each item is added to the view in constant time,
+                    // the overall time complexity for updating the UI is also O(n).
+
+
+                    // Update the adapter with the fetched items.
                     adapter.updateData(response.body().getItems());
                 } else {
+                    // Handle failure in fetching items.
                     Toast.makeText(getContext(), "Failed to fetch items: " + (response.body() == null ? "No response" : response.body().getMessage()), Toast.LENGTH_SHORT).show();
                     adapter.updateData(new ArrayList<>()); // Pass an empty list if fetch fails
                 }
@@ -129,6 +147,8 @@ public class DataGridFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ItemsResponse> call, Throwable t) {
+
+                // Handle network or other errors.
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 adapter.updateData(new ArrayList<>()); // Pass an empty list on failure
             }
@@ -140,11 +160,12 @@ public class DataGridFragment extends Fragment {
         searchField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            // No action needed here
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // Cancel any previous search operations
-                searchHandler.removeCallbacks(searchRunnable);
+                searchHandler.removeCallbacks(searchRunnable); // Remove any existing callbacks to avoid multiple searches
             }
 
             @Override
@@ -157,25 +178,35 @@ public class DataGridFragment extends Fragment {
     }
 
     private void filterData(String query) {
+
+        // Perform the search using the API interface.
         String token = SharedPreferenceManager.getToken(getContext());
         apiInterface.getFilteredItems("Bearer " + token, query).enqueue(new Callback<ItemsResponse>() {
             @Override
             public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    adapter.updateData(response.body().getItems()); // Update adapter with filtered data
+
+                    // Update the adapter with the filtered items.
+                    adapter.updateData(response.body().getItems()); //update data grid with filtered items
                 } else {
+
+                    // Handle failure in fetching filtered items.
                     Toast.makeText(getContext(), "Failed to fetch items: " + (response.body() == null ? "No response" : response.body().getMessage()), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ItemsResponse> call, Throwable t) {
+
+                // Handle network or other errors.
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void navigateToAddNewItem() {
+
+        // Navigate to the GridItem fragment for adding a new item.
         GridItem gridItemFragment = new GridItem();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, gridItemFragment)
@@ -184,6 +215,7 @@ public class DataGridFragment extends Fragment {
     }
 
     private void navigateToGridItemFragmentWithItemDetails(Item item) {
+        // Navigate to the GridItem fragment, passing selected item details.
         GridItem fragment = new GridItem();
         Bundle args = new Bundle();
         args.putInt("itemId", item.getId());

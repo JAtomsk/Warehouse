@@ -1,27 +1,19 @@
 /**
- * User Class
- *
+ * Class Name: User
  * Purpose:
- * Represents a user's credentials, specifically their username and password, used during registration and login processes.
- * This class is designed to encapsulate the user information required by the API to authenticate users or register new accounts.
- *
+ * - Represents a user's credentials, specifically their username and password, used during registration and login processes.
+ * - This class is designed to encapsulate the user information required by the API to authenticate users or register new accounts.
  * Features:
  * - Username: The user's unique identifier.
  * - Password: The user's password, which should be handled securely throughout the application's lifecycle, especially when being transmitted.
- *
  * Usage:
- * Objects of this class are created and used whenever user credentials need to be passed to the server for authentication tasks,
- * such as logging in or registering a new user. The username and password are encapsulated in this object to streamline
- * data management and enhance security practices.
- *
- * Example:
- * A new User object is created with a username and password input by the user and then sent to an API endpoint to register or log in the user.
- * This model helps maintain clean architecture by separating the user data model from the business logic and view layers.
- *
+ * - Objects of this class are created and used whenever user credentials need to be passed to the server for authentication tasks,
+ *   such as logging in or registering a new user. The username and password are encapsulated in this object to streamline
+ *   data management and enhance security practices.
+ * - This model helps maintain clean architecture by separating the user data model from the business logic and view layers.
  * Author: Jared Semonin
- * Date: 04/14/2024
+ * Date: 04/21/2024
  */
-
 package com.semonin.jjwarehouse;
 
 public class User {
@@ -29,13 +21,11 @@ public class User {
     private String password;
 
     /**
-     * Constructor to create a new User with a username and password.
-     * @param username The user's username.
-     * @param password The user's password.
+     * Constructor for User class.
+     * @param username The username of the user.
+     * @param password The password of the user.
      */
     public User(String username, String password) {
-        // Private fields to store the username and password
-
         this.username = username;
         this.password = password;
     }

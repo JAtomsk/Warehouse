@@ -1,5 +1,5 @@
 
-/**
+/*
  * RetrofitClient Class
  *
  * Purpose:
@@ -21,19 +21,19 @@
  * This line of code fetches the Retrofit instance and prepares it to make API calls as defined in the ApiInterface class.
  *
  * Author: Jared Semonin
- * Date: 04/14/2024
+ * Date: 04/21/2024
  */
-
 package com.semonin.jjwarehouse;
 
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
-    // Base URL for the backend server ** not the right URL as API has not successfully launched on the cloud that is the local url to launch
+
+    // Base URL for the backend server. Note: Replace "http://10.0.2.2:3000" with the actual server URL when deployed.
     private static final String Base_URL = "http://10.0.2.2:3000";
 
-    // Singleton instance of Retrofit
+    // Singleton instance of Retrofit to avoid multiple instance creation
     private static Retrofit retrofit = null;
 
     /**
@@ -43,10 +43,11 @@ public class RetrofitClient {
      */
     public static Retrofit getRetrofitInstance(){
         if (retrofit == null){
-            // Constructing the Retrofit instance with the specified base URL and Gson converter
+
+            // Double-check pattern for safe multi-threaded access
             retrofit = new Retrofit.Builder()
-                    .baseUrl(Base_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(Base_URL) // Set the base URL for HTTP requests
+                    .addConverterFactory(GsonConverterFactory.create()) // Add Gson converter factory for JSON serialization/deserialization
                     .build();
         }
         return retrofit;

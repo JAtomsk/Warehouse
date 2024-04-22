@@ -41,18 +41,10 @@
  *     and reduces direct exposure of the database to the app.
  * - This method adheres to best practices in modern application architecture, ensuring better maintenance and security.
  *
- *
- *
- *
- *
- *
- *
  * Author: Jared Semonin
  * Date: 04/14/2024
  * Version: 3.0
  */
-
-
 
 package com.semonin.jjwarehouse;
 
@@ -72,27 +64,28 @@ import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 
-    private EditText editTextUsername;
-    private EditText editTextPassword;
-    private ApiInterface apiInterface;
-
+    private EditText editTextUsername; // Input field for username
+    private EditText editTextPassword; // Input field for password
+    private ApiInterface apiInterface; // API interface for making network requests
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment and initialize UI components
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         // Initialize EditText fields for user input
 
         editTextUsername = view.findViewById(R.id.username);
         editTextPassword = view.findViewById(R.id.password);
-        // Initialize buttons and setup listeners for login and account creation
 
+        // Initialize buttons and setup listeners for login and account creation
         ImageButton loginButton = view.findViewById(R.id.loginButton);
         ImageButton createAccountButton = view.findViewById(R.id.createAccountButton);
-        // Initialize the API interface to interact with the cloud database
 
+        // Initialize the API interface to interact with the cloud database
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
+        // Set listener for the login button to process user authentication
         loginButton.setOnClickListener(v -> {
             String username = editTextUsername.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
@@ -100,24 +93,24 @@ public class LoginFragment extends Fragment {
         });
 
         // Set listener for the create account button to transition to the RegistrationFragment
-
         createAccountButton.setOnClickListener(v -> getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RegistrationFragment()).addToBackStack(null).commit());
 
         return view;
     }
 
+    // Method to handle user login using the API interface
     private void loginUser(User user) {
         Call<LoginResponse> call = apiInterface.loginUser(user);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
+
                     // Save the token using SharedPreferencesManager
                     SharedPreferenceManager.saveToken(getContext(), response.body().getToken());
 
-
                     Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                    navigateToInventory();
+                    navigateToInventory(); // Navigate to the main inventory screen (DataGridFragment) on successful login
                 } else {
                     Toast.makeText(getContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
                 }
@@ -131,7 +124,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void navigateToInventory() {
-        // Navigate to the inventory display fragment after successful login and token storage
+        // Navigate to the inventory display fragment (DataGridFragment)  after successful login and token storage
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DataGridFragment()).commit();
     }
 }

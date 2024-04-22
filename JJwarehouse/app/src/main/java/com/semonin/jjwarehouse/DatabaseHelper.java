@@ -1,4 +1,7 @@
 /**
+ * NO LONGER IN USE INCLUDED FOR REFERENCE TO PROJECT EVOLUTION
+ *
+ *
  * DatabaseHelper.java - Version 2.0
  *
  * Purpose:
@@ -280,17 +283,5 @@ public void addUser(String username, String password) {
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 }
-
-/**
- * DatabaseHelper Class - Meeting Course Outcomes
- * Course Outcome 2:
- * "Design, develop, and deliver professional-quality oral, written, and visual communications that are coherent, technically sound, and appropriately adapted to specific audiences and contexts."
- *
- * The changes made to of the DatabaseHelper class to support search functionality reflects a  advancement in the application's data management capabilities.
- * By adding a method to filter inventory items based on user input, this enhancement facilitates more effective communication of information to the user, aligning with professional-quality standards.
- * The inclusion of detailed comments and documentation within the class ensures that the modifications are not only technically sound but also  communicated to other developers, ensuring better understanding and collaboration.
- * This approach underscores the value of clarity in communications, specially  in  database interactions and data retrieval methods that directly impact user experience.
- *
- *
  */
 

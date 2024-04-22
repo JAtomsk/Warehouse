@@ -1,28 +1,27 @@
 
 
 /**
- * LoginResponse Class
- *
+ * Class Name: LoginResponse
  * Purpose:
- * This class is designed to encapsulate the response data received from the server after a login request.
- * It holds a token and a message, which are used to communicate the outcome of the login attempt to the user
- * and manage session control within the application.
- *
+ *  - To encapsulate the response data received from the server after a login attempt.
+ *  - It holds a token and a message, along with the role, to communicate the outcome of the login
+ *    attempt to the user and manage session control within the application.
  * Features:
- * - Token: A JWT (JSON Web Token) or similar token that can be used to maintain and verify user sessions across the application.
- * - Message: Provides feedback to the user about the login process, such as success or failure reasons.
- *
+ *  - Token: A JWT (JSON Web Token) used to authenticate and maintain user sessions across the application.
+ *  - Message: Communicates the result of the login attempt to the user, such as success or failure reasons.
+ *  - Role: Identifies the user's role within the application, which can be used for role-based access control.
  * Usage:
- * This class is primarily used within the network communication layer of the app, where it's instantiated
- * with the data received from the login API call. The token is then used for subsequent authenticated requests,
- * and the message is displayed to the user.
- *
+ *  - This class is used within the network communication layer of the app, instantiated with the data
+ *    received from the login API call.
+ *  - The token is used for subsequent authenticated requests to the server.
+ *  - The message is displayed to the user as feedback regarding the login attempt.
+ *  - The role is used to determine the user's permissions and access within the app.
  * Example:
- * On successful login, the server might return a token and a message "Login Successful", which this class will encapsulate.
- * The token is then stored in the app for session management, and the message is displayed to the user as a Toast or similar.
- *
+ *  - On successful login, the server might return a JSON object that includes a token, a success message,
+ *    and the user's role. This class encapsulates that data, allowing the app to manage user sessions
+ *    and display appropriate messages.
  * Author: Jared Semonin
- * Date: 04/14/2024
+ * Date: 04/21/2024
  */
 
 
@@ -45,10 +44,11 @@ public class LoginResponse {
     private String message;
 
     /**
-     * Constructor for LoginResponse
+     * Constructor for LoginResponse.
      * @param success Indicates if the login was successful.
      * @param token The token issued by the server for session management.
      * @param message A message from the server, usually indicating the status of the login attempt.
+     * @param role The role of the user as defined by the server.
      */
     public LoginResponse(boolean success, String token, String message, String role) {
         this.success = success;
