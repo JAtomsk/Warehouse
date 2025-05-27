@@ -1,236 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Professional Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Nunito Sans', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            background-color: #f4f4f4;
-            line-height: 1.8; /* Increased line height for better readability */
-            font-size: 18px; /* Increased font size */
-        }
-        header, footer {
-            background-color: #0056b3;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        nav {
-            background-color: #03396c;
-            text-align: center;
-            padding: 10px 0;
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        section {
-            background-color: white;
-            margin: 10px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: justify; /* Added text alignment for better presentation */
-        }
-        img, video {
-            width: 100%; /* Ensuring media scales correctly */
-            height: auto;
-            margin-top: 10px; /* Adding some space above images/videos */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JJWarehouse Project</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdfdfd;
+      color: #333;
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.7;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    code {
+      background: #f1f1f1;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    .section {
+      max-width: 900px;
+      margin: auto;
+      padding-bottom: 1.5rem;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Professional Portfolio</h1>
-        <p>An overview of my skills and achievements in software development.</p>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#assessment">Professional Self-Assessment</a></li>
-            <li><a href="#code-review">Code Review</a></li>
-            <li><a href="#software-design">Software Design</a></li>
-            <li><a href="#algorithms">Algorithms & Data Structures</a></li>
-            <li><a href="#databases">Databases</a></li>
-        </ul>
-    </nav>
-    <section id="assessment">
-        <h2>Professional Self-Assessment</h2>
-        <p>Professional Self-Assessment Journey
-            <p>My name is Jared Semonin. This is my GitHub page, showcasing my work as I graduate from Southern New Hampshire University with a degree in Computer Science. As I navigate through my educational and professional development in computer science, I've focused intensively on honing my abilities in Android application development, while also nurturing a growing interest in UI design and cybersecurity. My journey has been significantly shaped by the dynamic and challenging nature of the field, which demands a deep understanding of both technical skills and user-centric design.</p>
+  <div class="section">
+    <h1>📦 JJWarehouse – Full-Stack Inventory Management App for Android</h1>
+    <p>JJWarehouse is a full-stack inventory management system developed for Android using Java and Android Studio. What began as a basic local CRUD app has grown into a complete, secure, and scalable inventory solution with user authentication, cloud-based storage, real-time search functionality, and a thoughtful, touch-optimized UI.</p>
+    <p>This project was built entirely from the ground up — every screen, every database table, every line of backend logic. It reflects my process of relearning mobile development by doing, with a focus on writing secure, efficient code and building apps that solve real problems.</p>
 
-            <p>In the realm of Android development, I've embraced the complexities of creating robust and user-friendly applications. A key project that exemplifies this was developing an inventory management app, which served as a practical application of my learning in software engineering. This project not only enhanced my coding skills but also deepened my appreciation for intuitive UI design—ensuring that the app was not only functional but also aesthetically pleasing and easy to navigate.</p>
-        
-            <p>Simultaneously, the critical importance of security in software development steered my aspirations towards cybersecurity. I've tackled numerous projects where the integration of secure coding practices was paramount. For example, implementing advanced security measures like SHA-256 password hashing and using secure APIs demonstrated the necessity of cybersecurity proficiency in protecting user data and ensuring the integrity of the software.</p>
-        
-            <p>My coursework has also been instrumental in preparing me for real-world scenarios, particularly in team collaboration and stakeholder communication. These experiences not only improved my technical skills but also taught me the value of clear and effective communication, especially in projects involving complex technical details that needed to be conveyed to non-technical stakeholders.</p>
-        
-            <p>The development of my ePortfolio further solidified these experiences, allowing me to showcase my capabilities in a structured and impactful way. It highlighted not just my technical proficiency but also my ability to integrate user feedback into the development process, optimizing the user experience. This holistic approach to education and portfolio development has not only prepared me to enter the workforce but also to contribute meaningfully to discussions on software solutions, security protocols, and user interface enhancements.</p>
-        
-            <p>As I look forward to a career in either Android mobile development, UI design, or cybersecurity, I am excited by the opportunities to apply my skills in real-world applications. My aspirations include diving deeper into programming languages like C# and continuing to explore the vast landscape of cybersecurity. This journey through my computer science program has not only equipped me with a diverse set of skills but also shaped my professional values, emphasizing integrity, security, and the importance of user-centered design. Ready and eager, I am poised to join the workforce, bringing a strong foundation and a passionate commitment to advancing in the field of computer science.</p>
-    </section>
-    <section id="code-review">
-        <h2>Code Review</h2>
-        <p>Google Drive and Youtube Link.</p>
-        <video width="320" height="240" controls>
-            <source src=<iframe src="https://drive.google.com/file/d/15GKElgWri_gNcBzwq5sIDrwb_bnMIae9/preview" width="640" height="480" allow="autoplay"></iframe> type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        <p>Add your text here and embed related videos.</p>
-        <video width="100%" controls>
-            <source src="C:\Users\Jared\Documents\GitHub\JAtomsk.github.io\Code Review.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <h2>Software Design and Engineering</h2>
-    <p>Here is the original version of my software design project:</p>
-    <a href=https://github.com/JAtomsk/OriginalWarehouse>Original Code Repository</a>
-    <p>Here is the enhanced version of my software design project, showcasing the improvements made:</p>
-    <a href=https://github.com/JAtomsk/warehouse-inventory-app>Enhanced Code Repository</a>
-    <img src="https://github.com/JAtomsk/JAtomsk.github.io/blob/main/UMLI.png" alt="UML Class Diagram">
-    <p>Here Is a UML CLass Diagram showing the Structure of the enhanced artifact</p>
-    </section>
-    <section id="software-design">
-        <h2>Software Design and Engineering</h2>
-        <p>Developed in Android Studio, the front end of the application features a basic layout optimized for mobile devices. It employs native Android components for listing inventory items and fragments for managing different application segments within a single activity. The application communicates with a SQLite database to perform CRUD operations on inventory items. The user interface is designed for fast navigation and effortless operation, with well-placed touch targets for interactions.</p>
-        
-        <h3>Enhancements Implemented:</h3>
-        <ol>
-            <li><strong>UI Theme and Color Update:</strong> Enhanced the visual appeal of the user interface by updating the theme and color scheme.</li>
-            <li><strong>Custom Button Implementation:</strong> Integrated custom-designed buttons from Figma for performing CRUD operations, improving operational efficiency.</li>
-            <li><strong>Enhanced Documentation:</strong> Added comprehensive comments to document the classes and fragments, facilitating easier development for any new developer.</li>
-            <li><strong>User Account Creation Features:</strong> Implemented logic and UI components to enable username and password creation for user accounts.</li>
-            <li><strong>Login Functionality and Feedback:</strong> Introduced logic and UI components for user login capabilities, complete with success or failure notifications.</li>
-            <li><strong>Responsive UI Adjustments:</strong> Adjusted UI buttons and text fields to enhance responsiveness across different devices.</li>
-            <li><strong>Quick Quantity Adjustment Buttons:</strong> Added increment and decrement buttons for quick modifications of item quantities.</li>
-            <li><strong>Database Schema Enhancements for Inventory:</strong> Updated the database schema to more accurately store item names, IDs, and quantities.</li>
-            <li><strong>User Credentials Storage:</strong> Revised the database schema to securely store user credentials.</li>
-            <li><strong>Error Logging for Login:</strong> Incorporated error logging for tracking and debugging user login issues.</li>
-            <li><strong>Secure Database Operations:</strong> Implemented prepared statements in database operations to enhance security and efficiency.</li>
-            <li><strong>Enhanced Password Security:</strong> Added SHA-256 hashing for password storage and verification to ensure robust security.</li>
-        </ol>
-        
-        <p>The skills showcased in this artifact highlight my ability to leverage well-founded and innovative techniques, tools, and skills in computing practices, aiming to implement computer solutions that deliver value and meet specific goals in Android mobile software development.</p>
-    
-        <p>The artifact features a thematic color theme designed to enhance visual engagement. These colors were meticulously chosen to be both pleasant and functional, providing a clear visual hierarchy and minimizing eye strain during prolonged usage. Custom buttons and user interface elements were crafted to efficiently handle essential CRUD (Create, Read, Update, Delete) operations within the app. Each button was designed in Figma to ensure it was not only visually appealing but also optimized for touch interactions on mobile devices. The branding of the JJWarehouse app is further reinforced through the design of an intuitive logo in vector format, maintaining sharpness across different screen resolutions.</p>
-    
-        <p>Text views and button listeners have been appropriately scaled to ensure they can be easily activated with a finger, thus eliminating the need for precise taps. Increment and decrement buttons were added to the item quantity fields, allowing users to quickly and efficiently adjust values, which is crucial for inventory management.</p>
-    
-        <p>The skills demonstrated in the software engineering and design of this inventory management application reflect a robust security mindset, crucial for anticipating and mitigating adversarial exploits within software architecture. This approach is vital in exposing potential vulnerabilities, mitigating design flaws, and ensuring the privacy and security of data and resources.</p>
-    
-        <p>Reflecting on the software engineering and design enhancement, this journey through complex paths of database and security improvements reshaped the entire application, reflecting the transformative and sometimes challenging but ultimately rewarding experience.</p>
-    </section>
-    
-    <section id="algorithms">
-        <h2>Algorithms and Data Structures</h2>
-        <p>Algorithms and Data Structures Enhancement:</p>
-        <p>The inventory application utilizes a range of data structures and algorithms to manage operations such as the retrieval, insertion, update, and deletion of inventory items. These are implemented across both the front-end (Android app) and back-end systems, ensuring efficient data handling.</p>
-        
-        <ul>
-            <li><strong>Arrays and Lists:</strong> On the Android client, arrays and ArrayLists are extensively used to manage collections of inventory items. These structures are pivotal for storing data retrieved from the API and for displaying it within the UI, particularly in RecyclerViews, which are designed for efficient display of scrolling lists.</li>
-            <li><strong>Bundles:</strong> Bundles are employed to transfer data between fragments within the app. For instance, when an inventory item is selected, its details are encapsulated into a Bundle and transmitted to a detail view fragment. This method is integral for maintaining state and data continuity as users navigate through the application.</li>
-            <li><strong>Custom Objects:</strong> Object-oriented programming is leveraged to simplify data management through custom classes like Item, which includes fields such as id, name, and quantity. This approach encapsulates inventory data, facilitating more straightforward operations on individual items and enhancing code readability and maintainability.</li>
-            <li><strong>Query Processing:</strong> SQL queries are utilized to perform CRUD (Create, Read, Update, Delete) operations on the database. The performance of these queries is heavily influenced by factors such as the indexing of tables and the complexity of the queries themselves, highlighting the importance of efficient database design to overall application performance.</li>
-        </ul>
-    
-        <p><strong>Algorithms and Data Structures Enhancements Made:</strong></p>
-        <ul>
-            <li><strong>Implementation of Search Functionality:</strong>
-                <ul>
-                    <li>Algorithms: The addition of a search bar necessitated the implementation of search algorithms within the DatabaseHelper class. The <em>getItemsFilteredBy</em> method employs SQL LIKE queries for partial string matching, a fundamental string searching algorithm.</li>
-                    <li>Data Structures: The Inventory Adapter manages dynamic data structures, such as an ArrayList of Item objects, facilitating real-time data manipulation and display. Updating this list in response to search queries illustrates proficient use of list operations, essential for effective data structure manipulation.</li>
-                </ul>
-            </li>
-            <li><strong>UI Integration and Real-Time Data Interaction:</strong>
-                <ul>
-                    <li>Dynamic Data Binding: The RecyclerView within the DataGridFragment updates dynamically to display search results. This showcases efficient data binding from the data structures managed by the Inventory Adapter to the UI components, demonstrating the practical application of data structure principles in real scenarios.</li>
-                    <li>Efficient UI Updates: The Inventory Adapter's <em>updateData</em> method refreshes the RecyclerView when the dataset changes due to searches. This method exemplifies an effective application of the Adapter design pattern, reducing overhead and enhancing the app's responsiveness.</li>
-                </ul>
-            </li>
-            <li><strong>Database Interaction Optimization:</strong>
-                <ul>
-                    <li>Optimized Data Fetching: The search functionality is supported by optimized SQL queries designed to fetch data efficiently, reducing response times and resource usage, which are critical for performance in database-driven Android applications.</li>
-                    <li>Reduced Time Complexity: By ensuring well-formed database queries that only fetch data as needed, the application minimizes the time associated with data retrieval operations, vital in environments where data volume can expand.</li>
-                </ul>
-            </li>
-            <li><strong>Enhanced User Experience Through Responsive Design:</strong> Immediate Feedback: The real-time search feature provides immediate feedback to user inputs, a direct outcome of employing efficient algorithms and data structures to improve user experience.</li>
-        </ul>
-        
-        <p>These enhancements not only elevate the functionality of the application but also highlight my skills in effectively integrating complex algorithms and data structures to enhance both the backend functionality and frontend user interaction.</p>
-        <p>The skills demonstrated in this artifact illustrate my ability to design, develop, and effectively communicate professional-quality oral, written, and visual content that is coherent, technically sound, and suitably tailored for specific audiences and contexts. Through detailed narratives and inline comments within the DataGridFragment, InventoryAdapter, and DatabaseHelper classes, I provide clear and insightful descriptions of functionalities, explaining the rationale behind each decision and implementation. This effectively showcases my capability to articulate complex software functionalities and algorithms in a manner that is both clear and informative.</p>
-        <p>Additionally, the implementation of a user-friendly search interface in the DataGridFragment, complete with responsive feedback mechanisms such as Toast messages and dynamic updates, underscores my skill in adapting visual communication to meet user needs—a critical aspect in professional software development where interface design directly influences user experience and satisfaction.</p>
-        <p>The skills displayed in this artifact exemplify my ability to employ well-established and innovative techniques, tools, and methodologies in computing practices to develop solutions that deliver significant value and achieve goals specific to the industry.</p>
-        <p><strong>Algorithmic Thinking:</strong> The application of SQL LIKE queries for data searching and the dynamic management of data structures within the InventoryAdapter demonstrate effective data handling and presentation techniques. This design underscores a comprehensive understanding of software engineering principles.</p>
-        
-        <p><strong>Best Practices:</strong> The enhancements showcase the application of best practices in database management and UI interactions. For instance, optimizing data retrieval from the SQLite database significantly reduces latency and enhances performance, illustrating my proficiency in using database management tools effectively.</p>
-        
-        <p><strong>Industry Standards:</strong> The modifications I made are in line with current industry standards for mobile app development, specifically for Android platforms. The use of RecyclerView for efficient list management and a modular coding approach ensures scalability and adaptability of the application, reflecting an alignment with contemporary development practices.</p>
-        
-        <p><strong>Meeting Industry-Specific Goals:</strong> By adding and optimizing the search and data retrieval functions, the application is better equipped to handle larger datasets, which is important for real-world applications involving inventory management. The focus on improving user interaction through a responsive UI design ensures that the Inventory Management Application shows value by enhancing user satisfaction and engagement, key goals in the Android Development career field.</p>
-            <p><strong>Reflecting on the Algorithms and Data Structures Enhancement:</strong> Throughout the development of this project, I encountered numerous challenges and gained a wealth of knowledge in the process. Much of my implementation was built not from prior expertise but through diligent study and reference. I frequently consulted "Java Data Structures and Algorithms" by Daniele Liang, along with resources from the Zybooks Mobile Architecture class website. Java was not a language with which I was intimately familiar, yet it is currently the most relevant language for Android development, pushing me to deepen my understanding. One of the new features I introduced was the search functionality capable of handling real-time data filtering—a task I had never tackled before. Developing a search operation that was both quick and efficient required exploring SQLite queries designed to sift through large datasets without degrading performance. Before the final submission, I plan to populate the SQLite database with a larger volume of random inventory. Currently, the limited inventory I have inputted doesn't fully showcase the capabilities of this feature, underscoring the need for more comprehensive testing to demonstrate its effectiveness truly. The biggest problem faced was integrating the search functionality with the already existing recycler view. The RecyclerView had to be dynamically updated based on the search results. To achieve this, I had to take a number of approaches with data binding and adapter updates. Designing the RecyclerView in a way to be updated in real time as users typed their search queries without lagging involved management of the adapter's data set and careful handling of state changes within the application. Maintaining consistency with the U.I. aesthetic posed some challenges, particularly in introducing new elements like the search bar and sorting options. However, that does not directly apply to the enhancement theme of data structures and algorithms. This did require frequent revisions and refinements to align with best practices in UI design.<p>
-    
-    </section>
-    <section id="databases">
-        <h2>Databases</h2>
-        <p>Database Enhancement:</p>
-        <p>Before transitioning to a MySQL database, the JJWarehouse application used SQLite for local data management through the DatabaseHelper.java class. This class facilitated creating and managing the application's database, including user and inventory data. SQLite, embedded within Android applications, allowed for straightforward and efficient data operations directly on the device.</p>
-    
-        <p>The old DatabaseHelper class provided a full suite of CRUD operations. It managed user authentication by storing usernames and hashed passwords, ensuring basic security. The inventory management was handled through similar CRUD operations, allowing the application to add, retrieve, update, and delete inventory items as needed. Each inventory item was identified by a unique ID, with additional attributes like name and quantity stored in a structured format.</p>
-    
-        <p>For user authentication, the class included methods to add new users with hashed passwords and to verify login credentials by comparing hashed passwords stored in the database. This approach, while effective for smaller, standalone applications, lacked the robust security and scalability provided by server-based databases like MySQL, prompting the transition. The move to MySQL, coupled with bcrypt for hashing and JWT for session management, marked a significant enhancement in the application’s security and data management capabilities, aligning it more closely with industry standards and practices.</p>
-    
-        <p>Database Enhancement List:</p>
-        <ol>
-            <li>Migrated away from SQLite database to AWS MySql Database</li>
-            <li>Added modern frameworks (Node.js, Express, CORS)</li>
-            <li>Implemented bcrypt for password hashing.</li>
-            <li>Implemented JSON Web Token for Secure Authentication</li>
-            <li>Redesigned Database Schema with introduction of Tables (Items, Users,) with columns for IDs, name and quantities.</li>
-            <li>Began work on Role-Based Access Control.</li>
-            <li>Designed and implemented RESTful API Development server to manage all backend operations for the JJWarehouse inventory management application.</li>
-            <li>Improved Error Handling and Validation.</li>
-            <li>Search Functionality adapted to new database.</li>
-            <li>UI/UX refinement to support new features.</li>
-        </ol>
-    
-        <p>Classes and Methods Added for Enhancement:</p>
-        <ul>
-            <li><strong>ApiInterface:</strong> This interface was added to define all the server communication endpoints for the Retrofit HTTP client. It includes methods for user registration, login, adding, updating, and deleting inventory items, among others. This class plays a crucial role in defining how the app interacts with the backend API.</li>
-            <li><strong>LoginResponse and UserResponse:</strong> These classes were developed to handle responses from the server during login and user registration processes. They encapsulate the success status, messages, and other relevant data like tokens or user IDs returned by the server.</li>
-            <li><strong>ItemResponse and ItemsResponse:</strong> Similar to LoginResponse, these classes are designed to handle responses related to inventory items from the server. ItemResponse deals with responses for single item operations, while ItemsResponse manages responses for requests that involve multiple items, such as fetching the entire inventory.</li>
-            <li><strong>RetrofitClient:</strong> This class creates and configures the Retrofit instance used throughout the app to make network requests. It ensures that there is a single, reusable instance of Retrofit that includes all necessary configurations, such as the base URL and Gson converter for JSON parsing.</li>
-            <li><strong>SharedPreferenceManager:</strong> Introduced to manage shared preferences, specifically for storing and retrieving JWT tokens and user roles locally on the device. This class is crucial for session management and ensuring that user credentials are handled securely.</li>
-        </ul>
-        
-        <p>The skills for this artifact demonstrate a security mindset that anticipates adversarial exploits in software architecture. By transitioning from a local SQLite database to a robust MySQL database, paired with a secure server-side environment, we have significantly enhanced the security and scalability of our data management practices. This proactive approach helps mitigate potential security threats, with bcrypt for password hashing and JSON Web Tokens (JWT) for session management enhancing the protection against password cracking and token theft. Additionally, HTTPS connections between the mobile app and the server encrypt all transmitted data, safeguarding against unauthorized access during transit.</p>
-    
-        <p>The application employs advanced algorithmic strategies to optimize performance, utilizing Big O notation considerations to streamline data retrieval processes. Methods like fetchData and filterData in the DataGridFragment are designed for efficient interaction with the MySQL database via REST API calls, ensuring quick and scalable data access. The use of SQL's LIKE query optimized with indices demonstrates an efficient implementation of search functionalities that minimize time complexity and enhance responsiveness.</p>
-    
-        <p>Furthermore, the integration of these technologies not only addresses the immediate requirements of efficient data access but also aligns with broader industry standards that emphasize security, performance, and maintainability. By handling heavy data processing server-side, we maintain the application's responsiveness and scalability, crucial for mobile environments where resource constraints are significant.</p>
-    
-        <p>The development of the inventory application has been geared towards creating an inclusive and user-friendly environment. The simple and intuitive design of the user interface makes it accessible for users of all technical levels, promoting broader engagement and supporting organizational goals like efficient inventory management and data accuracy. Real-time data insights provided by the inventory management features enable effective decision-making, crucial for maintaining operational success.</p>
-    
-        <p>In summary, this project exemplifies a comprehensive approach to software development that integrates user feedback and employs robust data management and security practices. By focusing on collaborative tools that enhance user satisfaction and operational efficiency, the application supports diverse organizational roles and demonstrates a commitment to developing solutions that are not only functional but also secure and adaptable to future technological advancements.</p>
-        
-    
-        <p>Reflecting on the Database Enhancement, throughout the development of this project, I encountered numerous challenges and gained a wealth of knowledge in the process. Much of my implementation was built not from prior expertise but through diligent study and reference. I frequently consulted "Java Data Structures and Algorithms" by Daniele Liang, along with resources from the Zybooks Mobile Architecture class website. Java was not a language with which I was intimately familiar, yet it is currently the most relevant language for Android development, pushing me to deepen my understanding. One of the new features I introduced was the search functionality capable of handling real-time data filtering—a task I had never tackled before. Developing a search operation that was both quick and efficient required exploring SQLite queries designed to sift through large datasets without degrading performance. Before the final submission, I plan to populate the SQLite database with a larger volume of random inventory. Currently, the limited inventory I have inputted doesn't fully showcase the capabilities of this feature, underscoring the need for more comprehensive testing to demonstrate its effectiveness truly. The biggest problem faced was integrating the search functionality with the already existing recycler view. The RecyclerView had to be dynamically updated based on the search results. To achieve this, I had to take a number of approaches with data binding and adapter updates. Designing the RecyclerView in a way to be updated in real time as users typed their search queries without lagging involved management of the adapter's data set and careful handling of state changes within the application. Maintaining consistency with the U.I. aesthetic posed some challenges, particularly in introducing new elements like the search bar and sorting options. However, that does not directly apply to the enhancement theme of data structures and algorithms. This did require frequent revisions and refinements to align with best practices in UI design.</p>
-    </section>
-    <footer>
-        <p>© 2024 Jared Semonin. All rights reserved.</p>
-    </footer>
+    <h2>🧭 Project Background</h2>
+    <p>This application started as a simple academic exercise: a local inventory tracker with basic Create, Read, Update, and Delete (CRUD) functionality powered by a SQLite database. Users could manage item names, IDs, and quantities on their device, but there was no user account system, no remote data access, and limited security.</p>
+    <p>I decided to treat this as an opportunity to challenge myself and turn the prototype into something production-worthy. I gradually rebuilt and expanded the app, touching nearly every layer of the stack.</p>
+
+    <h2>🔐 Security & Authentication</h2>
+    <ul>
+      <li>Passwords are hashed using <code>bcrypt</code> before storage</li>
+      <li><code>JWT</code> (JSON Web Token) used for secure session management</li>
+      <li>Tokens stored with <code>SharedPreferences</code> locally</li>
+      <li>Real-time login feedback and server-side validation</li>
+    </ul>
+
+    <h2>🧰 Backend Development</h2>
+    <p>The RESTful API was built with:</p>
+    <ul>
+      <li><code>Node.js</code> + <code>Express.js</code></li>
+      <li><code>MySQL</code> (AWS RDS)</li>
+      <li><code>CORS</code> + JWT middleware</li>
+      <li>Input validation + custom error handling</li>
+    </ul>
+    <p>Server communication is handled via Retrofit. Support classes include <code>ApiInterface</code>, <code>RetrofitClient</code>, <code>ItemResponse</code>, and <code>LoginResponse</code>.</p>
+
+    <h2>📦 Inventory Functionality</h2>
+    <ul>
+      <li>CRUD for inventory items</li>
+      <li>Quantity adjustment buttons</li>
+      <li>Real-time search with partial matching</li>
+      <li>Efficient UI updates using RecyclerView</li>
+    </ul>
+
+    <h2>🎨 User Interface & Design</h2>
+    <p>Guided by my background in graphic design:</p>
+    <ul>
+      <li>Modern color scheme for readability</li>
+      <li>Figma-crafted buttons and layouts</li>
+      <li>Optimized for touch and various screen sizes</li>
+    </ul>
+
+    <h2>🧠 What I Learned</h2>
+    <ul>
+      <li>Retrofit integration with backend</li>
+      <li>JWT authentication + secure storage</li>
+      <li>Scaling to MySQL from SQLite</li>
+      <li>Real-time search + RecyclerView management</li>
+      <li>Using prepared statements to prevent SQL injection</li>
+    </ul>
+
+    <h2>🧰 Tech Stack</h2>
+    <ul>
+      <li><strong>Language:</strong> Java</li>
+      <li><strong>IDE:</strong> Android Studio</li>
+      <li><strong>UI:</strong> XML, Figma</li>
+      <li><strong>Backend:</strong> Node.js, Express.js</li>
+      <li><strong>API:</strong> Retrofit</li>
+      <li><strong>Database:</strong> SQLite → MySQL (AWS RDS)</li>
+      <li><strong>Security:</strong> bcrypt, JWT, HTTPS</li>
+      <li><strong>Tools:</strong> GitHub, Postman, Obsidian</li>
+    </ul>
+
+    <h2>🚧 Challenges & Solutions</h2>
+    <ul>
+      <li><strong>SQLite → MySQL Migration:</strong> Full schema redesign + API rework</li>
+      <li><strong>Live Search:</strong> Optimized RecyclerView filtering</li>
+      <li><strong>Manual Auth:</strong> Built from scratch (no Firebase)</li>
+    </ul>
+
+    <h2>📈 Future Plans</h2>
+    <ul>
+      <li>Role-based access (admin vs user)</li>
+      <li>CSV import/export</li>
+      <li>Notification integration (Firebase or SMS)</li>
+      <li>Unit + UI test coverage</li>
+    </ul>
+
+    <h2>🔗 Links</h2>
+    <ul>
+      <li><a href="https://github.com/JAtomsk/Warehouse" target="_blank">📂 View Source Code</a></li>
+      <li><em>🌐 Live Project Site (Coming Soon)</em></li>
+    </ul>
+  </div>
 </body>
 </html>
